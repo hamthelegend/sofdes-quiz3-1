@@ -89,16 +89,17 @@ public static class UsersDb
 
     public static List<User> GetAll(string search = "")
     {
+        search = search.ToLower();
         var context = new UsersContext();
         var userEntities = context.UserEntities.ToList();
         return userEntities
             .Where(
                 user =>
-                user.Id.ToString().Contains(search) ||
-                user.FullName.Contains(search) ||
-                user.Email.Contains(search) ||
-                user.Gender.Contains(search) ||
-                user.Address.Contains(search)
+                user.Id.ToString().ToLower().Contains(search) ||
+                user.FullName.ToLower().Contains(search) ||
+                user.Email.ToLower().Contains(search) ||
+                user.Gender.ToLower().Contains(search) ||
+                user.Address.ToLower().Contains(search)
             )
             .Select(userEntity => userEntity.ToUser())
             .ToList();
