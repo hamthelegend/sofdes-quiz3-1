@@ -7,8 +7,10 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -17,9 +19,18 @@ using Windows.Foundation.Collections;
 
 namespace SofdesQuiz3_1
 {
-    public sealed partial class MainWindow : Window
+    public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private List<User> Users;
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        private List<User> _users;
+        private List<User> Users
+        {
+            get => _users;
+            set { _users = value; OnPropertyChanged(); }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,18 +45,6 @@ namespace SofdesQuiz3_1
 
         private async void Remove(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(idInput.Text))
-            {
-                await new ContentDialog
-                {
-                    Title = "No user selected",
-                    Content = "Select the user you want to delete from the list first.",
-                    CloseButtonText = "Okay",
-                    XamlRoot = Content.XamlRoot,
-                }.ShowAsync();
-                return;
-            }
-
             var response = await new ContentDialog
             {
                 Title = "Delete user",
@@ -69,15 +68,16 @@ namespace SofdesQuiz3_1
             var user = await ParseUserAsync();
             if (user != null)
             {
-                UsersDb.InsertUpdateAsync(user);
+                UsersDb.InsertUpdate(user);
                 Clear();
                 LoadData();
             }
         }
 
-        private void Search(object sender, RoutedEventArgs e)
+        private void Search(object sender, TextChangedEventArgs e)
         {
-
+            var search = searchInput.Text;
+            Users = UsersDb.GetAll(search);
         }
 
         private void SelectUser(object sender, DoubleTappedRoutedEventArgs e)
@@ -89,7 +89,7 @@ namespace SofdesQuiz3_1
                 fullNameInput.Text = user.FullName;
                 emailInput.Text = user.Email;
                 birthdateInput.SelectedDate = user.Birthdate;
-                genderInput.Text = user.Gender;
+                genderInput.SelectedItem = user.Gender;
                 addressInput.Text = user.Address;
             }
         }
@@ -151,12 +151,20 @@ namespace SofdesQuiz3_1
         {
             if (string.IsNullOrEmpty(idInput.Text))
             {
+                removeButton.IsEnabled = false;
                 addButton.Content = "Add";
             }
             else
             {
+                removeButton.IsEnabled = true;
                 addButton.Content = "Update";
             }
+        }
+
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            // Raise the PropertyChanged event, passing the name of the property whose value has changed.
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
