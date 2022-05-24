@@ -74,7 +74,8 @@
                     HorizontalAlignment="Stretch"
                     Content="Remove"
                     Click="Remove"
-                    Margin="20,20,5,20"/>
+                    Margin="20,20,5,20"
+                    IsEnabled="False"/>
                 <Button
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
