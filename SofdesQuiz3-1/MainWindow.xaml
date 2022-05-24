@@ -30,13 +30,17 @@
                     Margin="20,10,10,5"/>
                 <TextBox
                     x:Name="fullNameInput"
-                    Margin="20,5,20,10"/>
+                    Margin="20,5,20,10"
+                    IsTextPredictionEnabled="False" 
+                    IsSpellCheckEnabled="False"/>
                 <TextBlock
                     Text="Email"
                     Margin="20,10,20,5"/>
                 <TextBox
                     x:Name="emailInput"
-                    Margin="20,5,20,10"/>
+                    Margin="20,5,20,10"
+                    IsTextPredictionEnabled="False" 
+                    IsSpellCheckEnabled="False"/>
                 <TextBlock
                     Text="Birthdate"
                     Margin="20,10,20,5"/>
@@ -60,7 +64,9 @@
                     x:Name="addressInput"
                     Margin="20,5,20,10"
                     Height="100"
-                    TextWrapping="Wrap"/>
+                    TextWrapping="Wrap"
+                    IsTextPredictionEnabled="False" 
+                    IsSpellCheckEnabled="False"/>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
