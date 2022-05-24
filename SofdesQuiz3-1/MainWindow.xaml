@@ -1,0 +1,115 @@
+﻿<Window
+    x:Class="SofdesQuiz3_1.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SofdesQuiz3_1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical">
+                <TextBlock
+                    Text="User ID"
+                    Margin="20,20,20,5"/>
+                <TextBox
+                    x:Name="idInput"
+                    Margin="20,5,20,10"
+                    IsEnabled="False"
+                    TextChanged="idInput_TextChanged"/>
+                <TextBlock
+                    Text="Full name"
+                    Margin="20,10,10,5"/>
+                <TextBox
+                    x:Name="fullNameInput"
+                    Margin="20,5,20,10"/>
+                <TextBlock
+                    Text="Email"
+                    Margin="20,10,20,5"/>
+                <TextBox
+                    x:Name="emailInput"
+                    Margin="20,5,20,10"/>
+                <TextBlock
+                    Text="Birthdate"
+                    Margin="20,10,20,5"/>
+                <DatePicker
+                    x:Name="birthdateInput"
+                    Margin="20,5,20,10"/>
+                <TextBlock
+                    Text="Gender"
+                    Margin="20,10,20,5"/>
+                <ComboBox
+                    x:Name="genderInput"
+                    Margin="20,5,20,10">
+                    <x:String>Unspecified</x:String>
+                    <x:String>Male</x:String>
+                    <x:String>Female</x:String>
+                </ComboBox>
+                <TextBlock
+                    Text="Address"
+                    Margin="20,10,20,5"/>
+                <TextBox
+                    x:Name="addressInput"
+                    Margin="20,5,20,10"
+                    Height="100"
+                    TextWrapping="Wrap"/>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    Content="Remove"
+                    Click="Remove"
+                    Margin="20,20,5,20"/>
+                <Button
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    Content="Clear"
+                    Click="Clear"
+                    Margin="5,20,5,20"/>
+                <Button
+                    x:Name="addButton"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    Content="Add"
+                    Click="AddUpdate"
+                    Margin="5,20,20,20"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Grid.Column="0"
+                    x:Name="searchInput"
+                    Margin="20,5,5,10"/>
+                <Button
+                    Grid.Column="1"
+                    Content="Search"
+                    Click="Search"
+                    Margin="5,5,20,10"/>
+            </Grid>
+            <controls:DataGrid
+                x:Name="usersDataGrid"
+                ColumnWidth="*"
+                Grid.Row="3"
+                ItemsSource="{x:Bind Users}"
+                DoubleTapped="SelectUser"/>
+        </Grid>
+    </ScrollViewer>
+
+</Window>
