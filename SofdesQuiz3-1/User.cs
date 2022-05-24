@@ -86,14 +86,25 @@ public static class UsersDb
         var userEntity = context.UserEntities.Where(user => user.Id == id).FirstOrDefault();
         return userEntity?.ToUser();
     }
-    public static List<User> GetAll()
+
+    public static List<User> GetAll(string search = "")
     {
         var context = new UsersContext();
         var userEntities = context.UserEntities.ToList();
-        return userEntities.Select(userEntity => userEntity.ToUser()).ToList();
+        return userEntities
+            .Where(
+                user =>
+                user.Id.ToString().Contains(search) ||
+                user.FullName.Contains(search) ||
+                user.Email.Contains(search) ||
+                user.Gender.Contains(search) ||
+                user.Address.Contains(search)
+            )
+            .Select(userEntity => userEntity.ToUser())
+            .ToList();
     }
 
-    public static async void InsertUpdateAsync(User user)
+    public static void InsertUpdate(User user)
     {
         var context = new UsersContext();
         var userEntityOnDb = context.UserEntities.Where(userEntity => userEntity.Id == user.Id).FirstOrDefault();
