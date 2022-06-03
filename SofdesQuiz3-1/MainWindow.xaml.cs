@@ -76,8 +76,7 @@ namespace SofdesQuiz3_1
 
         private void Search(object sender, TextChangedEventArgs e)
         {
-            var search = searchInput.Text;
-            Users = UsersDb.GetAll(search);
+            LoadData();
         }
 
         private void SelectUser(object sender, DoubleTappedRoutedEventArgs e)
@@ -144,7 +143,8 @@ namespace SofdesQuiz3_1
 
         private void LoadData()
         {
-            Users = UsersDb.GetAll();
+            var search = searchInput.Text;
+            Users = UsersDb.GetAll(search);
         }
 
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
